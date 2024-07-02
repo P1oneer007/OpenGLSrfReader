@@ -29,9 +29,11 @@ namespace OpenGLSrfReader.Controls
                 MajorVersion = 3,
                 MinorVersion = 3
             };
+            
             openTkControl.Start(settings);
             InitializeShaders();
             InitializeTexture();
+                       
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
@@ -46,12 +48,12 @@ namespace OpenGLSrfReader.Controls
             Clear();
             DrawTexture((int)openTkControl.ActualWidth, (int)openTkControl.ActualHeight, _textureId);
         }
-
+      
         private void InitializeTexture()
         {
             _textureId = GL.GenTexture();
         }
-       
+        
         private void Clear()
         {
             GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -59,30 +61,43 @@ namespace OpenGLSrfReader.Controls
         }
         ushort[] _data;
         ushort[,,] _Data;
+        
         public void RenderImage(SrfFileData data, TextBox debugTextBlock)
         {
            // Assembly.LoadFrom(@"D:\data\downloads\interface.dll");
             string debugInfo = $"Pixel Data: {string.Join(", ", data.PixelData.Take(10))}";
             debugTextBlock.Text = debugInfo;
             
-            _Data = Tools.ArrayToTensor(data.PixelData, data.FrameHeight, data.FrameWidth);
+           /* _Data = Tools.ArrayToTensor(data.PixelData, data.FrameHeight, data.FrameWidth);
             ushort[,,]_NormalizeData = Tools.Normalize(_Data);
             ushort[,,]_HistEqualization = Tools.HistEqualization(_NormalizeData);
             ushort[,,]_Inverted = Tools.Inverted(_HistEqualization);
-            _data = Tools.Flatten(_Inverted);
+            _data = Tools.Flatten(_Inverted);*/
            
            // Гармонизируем изображение
            // ushort[] harmonizedData = ImageProcessing.HarmonizeImage(data.PixelData);
            // ushort[] BCData = ImageProcessing.ApplyBrightnessAndContrast(harmonizedData, 0, 0, true);
            
-
             _textureWidth = data.FrameWidth;
             _textureHeight = data.FrameHeight;
 
+            GL.BindTexture(TextureTarget.Texture2D, _textureId);GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.R16, _textureWidth, _textureHeight, 0,
+               PixelFormat.Red, PixelType.UnsignedShort, data.PixelData);
+           
+           /* GL.RasterPos2(0, 0);
+            GL.DrawPixels(_textureWidth, _textureHeight, PixelFormat.Red, PixelType.UnsignedShort, _data);
+            
             GL.BindTexture(TextureTarget.Texture2D, _textureId);
-
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.R16, _textureWidth, _textureHeight, 0,
-                PixelFormat.Red, PixelType.UnsignedShort, _data);
+            GL.Begin(PrimitiveType.Quads);
+            GL.TexCoord2(0.0f, 0.0f); GL.Vertex2(-1.0f, -1.0f);
+            GL.TexCoord2(1.0f, 0.0f); GL.Vertex2(1.0f, -1.0f);
+            GL.TexCoord2(1.0f, 1.0f); GL.Vertex2(1.0f, 1.0f);
+            GL.TexCoord2(0.0f, 1.0f); GL.Vertex2(-1.0f, 1.0f);
+            GL.End();
+            
+            GL.RasterPos2(_textureWidth, 0);
+            GL.DrawPixels(_textureWidth, _textureHeight, PixelFormat.Red, PixelType.UnsignedShort, _data);
+            */
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
@@ -91,7 +106,7 @@ namespace OpenGLSrfReader.Controls
 
             openTkControl.InvalidateVisual();
         }
-
+        
         private void DrawTexture(int width, int height, int textureId)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -207,8 +222,6 @@ namespace OpenGLSrfReader.Controls
                  1.0f, -1.0f,  1.0f, 1.0f,
             };
 
-
-
             int vertexBuffer;
             GL.GenVertexArrays(1, out _vertexArray);
             GL.GenBuffers(1, out vertexBuffer);
@@ -227,7 +240,6 @@ namespace OpenGLSrfReader.Controls
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.BindVertexArray(0);
         }
-       
 
         private void CheckShaderCompileStatus(int shader)
         {

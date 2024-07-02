@@ -6,7 +6,7 @@
          xmlns:local="clr-namespace:OpenGLSrfReader.Controls"
          xmlns:glWpf="clr-namespace:OpenTK.Wpf;assembly=GLWpfControl"
          Loaded="OnLoaded"
-         Unloaded="OnUnloaded" Width="572" Height="508"> <!--Width="572" Height="508"-->
+         Unloaded="OnUnloaded"  Width="572" Height="508"> 
     <Grid>
         <glWpf:GLWpfControl x:Name="openTkControl" Render="OnRender" />
     </Grid>
