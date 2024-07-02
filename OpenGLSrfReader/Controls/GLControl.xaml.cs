@@ -106,7 +106,7 @@ namespace OpenGLSrfReader.Controls
 
             openTkControl.InvalidateVisual();
         }
-        
+       
         private void DrawTexture(int width, int height, int textureId)
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
