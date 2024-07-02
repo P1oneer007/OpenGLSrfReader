@@ -59,7 +59,11 @@ namespace OpenGLSrfReader
             NormalizeImage(imageData1);
             DisplayImage(imageData1, glControl);
         }
-
+        private void NormalizeImage_Click2(object sender, RoutedEventArgs e)
+        {
+            NormalizeImage(imageData2);
+            DisplayImage(imageData2, glControl2);
+        }
         private void NormalizeImage(SrfFileData data)
         {
             if (data == null) return;            
@@ -70,109 +74,127 @@ namespace OpenGLSrfReader
 
         private void InvertImage_Click(object sender, RoutedEventArgs e)
         {
-            _currentImage = Tools.ArrayToTensor(_Image, 3008, 3072);
-            ushort[,,] _InvertImage= Tools.Inverted(_currentImage);
-            _Image = Tools.Flatten(_InvertImage);
-
-            SrfFileData Data = new SrfFileData
-            {
-                PixelData = _Image,
-                FrameWidth = 3072,
-                FrameHeight = 3008
-            };
-            DisplayImage(Data, glControl);
+            InvertImage(imageData1);
+            DisplayImage(imageData1, glControl);
+        }
+        private void InvertImage_Click2(object sender, RoutedEventArgs e)
+        {
+            InvertImage(imageData2);
+            DisplayImage(imageData2, glControl2);
         }
 
+        private void InvertImage(SrfFileData data)
+        {
+            if (data == null) return;
+            ushort[,,] _currentImage = Tools.ArrayToTensor(data.PixelData, data.FrameHeight, data.FrameWidth);
+            ushort[,,] _InvertImage = Tools.Inverted(_currentImage);
+            data.PixelData = Tools.Flatten(_InvertImage);
+        }
         private void HistogramEqualization_Click(object sender, RoutedEventArgs e)
         {
-            _currentImage = Tools.ArrayToTensor(_Image, 3008, 3072);
+            HistogramEqualization(imageData1);
+            DisplayImage(imageData1, glControl);
+        }
+        private void HistogramEqualization_Click2(object sender, RoutedEventArgs e)
+        {
+            HistogramEqualization(imageData2);
+            DisplayImage(imageData2, glControl2);
+        }
+        private void HistogramEqualization(SrfFileData data)
+        {
+            if (data == null) return;
+            ushort[,,] _currentImage = Tools.ArrayToTensor(data.PixelData, data.FrameHeight, data.FrameWidth);
             ushort[,,] _HistEqualization = Tools.HistEqualization(_currentImage);
-            _Image = Tools.Flatten(_HistEqualization);
-
-            SrfFileData Data = new SrfFileData
-            {
-                PixelData = _Image,
-                FrameWidth = 3072,
-                FrameHeight = 3008
-            };
-            DisplayImage(Data, glControl);
+            data.PixelData = Tools.Flatten(_HistEqualization);
         }
 
         private void MedianFilter_Click(object sender, RoutedEventArgs e)
         {
-            _currentImage = Tools.ArrayToTensor(_Image, 3008, 3072);
+            MedianFilter(imageData1);
+            DisplayImage(imageData1, glControl);
+        }
+        private void MedianFilter_Click2(object sender, RoutedEventArgs e)
+        {
+            MedianFilter(imageData2);
+            DisplayImage(imageData2, glControl2);
+        }
+        private void MedianFilter(SrfFileData data)
+        {
+            if (data == null) return;
+            ushort[,,] _currentImage = Tools.ArrayToTensor(data.PixelData, data.FrameHeight, data.FrameWidth);
             ushort[,,] _MedianFilter = Tools.MedianFilter(_currentImage, 5);
-            _Image = Tools.Flatten(_MedianFilter);
-
-            SrfFileData Data = new SrfFileData
-            {
-                PixelData = _Image,
-                FrameWidth = 3072,
-                FrameHeight = 3008
-            };
-            DisplayImage(Data, glControl);
+            data.PixelData = Tools.Flatten(_MedianFilter);
         }
 
         private void BoxFilter_Click(object sender, RoutedEventArgs e)
         {
-            _currentImage = Tools.ArrayToTensor(_Image, 3008, 3072);
+            BoxFilter(imageData1);
+            DisplayImage(imageData1, glControl);
+        }
+        private void BoxFilter_Click2(object sender, RoutedEventArgs e)
+        {
+            BoxFilter(imageData2);
+            DisplayImage(imageData2, glControl2);
+        }
+        private void BoxFilter(SrfFileData data)
+        {
+            if (data == null) return;
+            ushort[,,] _currentImage = Tools.ArrayToTensor(data.PixelData, data.FrameHeight, data.FrameWidth);
             ushort[,,] _BoxFilter = Tools.BoxFilter(_currentImage, 5);
-            _Image = Tools.Flatten(_BoxFilter);
-
-            SrfFileData Data = new SrfFileData
-            {
-                PixelData = _Image,
-                FrameWidth = 3072,
-                FrameHeight = 3008
-            };
-            DisplayImage(Data, glControl);
+            data.PixelData = Tools.Flatten(_BoxFilter);
         }
 
         private void BilateralFilter_Click(object sender, RoutedEventArgs e)
         {
-            _currentImage = Tools.ArrayToTensor(_Image, 3008, 3072);
-            ushort[,,] _BilateralFilter = Tools.BilateralFilter(_currentImage, 3, 10);
-            _Image = Tools.Flatten(_BilateralFilter);
-
-            SrfFileData Data = new SrfFileData
-            {
-                PixelData = _Image,
-                FrameWidth = 3072,
-                FrameHeight = 3008
-            };
-            DisplayImage(Data, glControl);
+            BilateralFilter(imageData1);
+            DisplayImage(imageData1, glControl);
         }
-
+        private void BilateralFilter_Click2(object sender, RoutedEventArgs e)
+        {
+            BilateralFilter(imageData2);
+            DisplayImage(imageData2, glControl2);
+        }
+        private void BilateralFilter(SrfFileData data)
+        {
+            if (data == null) return;
+            ushort[,,] _currentImage = Tools.ArrayToTensor(data.PixelData, data.FrameHeight, data.FrameWidth);
+            ushort[,,] _BilateralFilter = Tools.BilateralFilter(_currentImage, 3, 10);
+            data.PixelData = Tools.Flatten(_BilateralFilter);
+        }
         private void GaussianFilter_Click(object sender, RoutedEventArgs e)
         {
-            _currentImage = Tools.ArrayToTensor(_Image, 3008, 3072);
-            ushort[,,] _GaussianFilter = Tools.Gaussian(_currentImage, 5, 0.8);
-            _Image = Tools.Flatten(_GaussianFilter);
-
-            SrfFileData Data = new SrfFileData
-            {
-                PixelData = _Image,
-                FrameWidth = 3072,
-                FrameHeight = 3008
-            };
-            DisplayImage(Data   , glControl);
+            GaussianFilter(imageData1);
+            DisplayImage(imageData1, glControl);
         }
-
+        private void GaussianFilter_Click2(object sender, RoutedEventArgs e)
+        {
+            GaussianFilter(imageData2);
+            DisplayImage(imageData2, glControl2);
+        }
+        private void GaussianFilter(SrfFileData data)
+        {
+            if (data == null) return;
+            ushort[,,] _currentImage = Tools.ArrayToTensor(data.PixelData, data.FrameHeight, data.FrameWidth);
+            ushort[,,] _GaussianFilter = Tools.Gaussian(_currentImage, 5, 0.8);
+            data.PixelData = Tools.Flatten(_GaussianFilter);
+        }
         private void SharpenFilter_Click(object sender, RoutedEventArgs e)
         {
-            _currentImage = Tools.ArrayToTensor(_Image, 3008, 3072);
-            ushort[,,] _SharpenFilter = Tools.Sharpen(_currentImage, 1.0, false);
-            _Image = Tools.Flatten(_SharpenFilter);
-
-            SrfFileData Data = new SrfFileData
-            {
-                PixelData = _Image,
-                FrameWidth = 3072,
-                FrameHeight = 3008
-            };
-            DisplayImage(Data, glControl);
+            SharpenFilter(imageData1);
+            DisplayImage(imageData1, glControl);
         }
-
+        private void SharpenFilter_Click2(object sender, RoutedEventArgs e)
+        {
+            SharpenFilter(imageData2);
+            DisplayImage(imageData2, glControl2);
+        }
+        private void SharpenFilter(SrfFileData data)
+        {
+            if (data == null) return;
+            ushort[,,] _currentImage = Tools.ArrayToTensor(data.PixelData, data.FrameHeight, data.FrameWidth);
+            ushort[,,] _SharpenFilter = Tools.Sharpen(_currentImage, 1.0, false);
+            data.PixelData = Tools.Flatten(_SharpenFilter);
+        }
         private void DisplayImage(SrfFileData data, GLControl controlToDisplay)
         {
             controlToDisplay.RenderImage(data, debugTextBlock);

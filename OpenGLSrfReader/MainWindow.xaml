@@ -6,9 +6,17 @@
         xmlns:local="clr-namespace:OpenGLSrfReader"
         xmlns:controls="clr-namespace:OpenGLSrfReader.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Width="1300" Height="800" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Width="1500" Height="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
@@ -19,28 +27,33 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Кнопка в верхней левой части -->
+        <!-- Кнопка загрузки файла -->
         <Button Content="Open SRF File" HorizontalAlignment="Left" VerticalAlignment="Top" Click="OnLoadImageClicked" Grid.Row="0" Grid.Column="0" Margin="10"/>
-        <Button Content="Normalize Image" HorizontalAlignment="Left" VerticalAlignment="Top" Click="NormalizeImage_Click" Grid.Row="0" Grid.Column="1" Margin="10"/>
-        <Button Content="Invert Image" HorizontalAlignment="Left" VerticalAlignment="Top" Click="InvertImage_Click" Grid.Row="0" Grid.Column="2" Margin="10"/>
-        <Button Content="Histogram Equalization" HorizontalAlignment="Left" VerticalAlignment="Top" Click="HistogramEqualization_Click" Grid.Row="0" Grid.Column="3" Margin="10"/>
-        <Button Content="Median Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="MedianFilter_Click" Grid.Row="0" Grid.Column="4" Margin="10"/>
-        <Button Content="Box Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BoxFilter_Click" Grid.Row="0" Grid.Column="5" Margin="10"/>
-        <Button Content="Bilateral Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BilateralFilter_Click" Grid.Row="0" Grid.Column="6" Margin="10"/>
-        <Button Content="Gaussian Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GaussianFilter_Click" Grid.Row="0" Grid.Column="7" Margin="10"/>
-        <Button Content="Sharpen Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SharpenFilter_Click" Grid.Row="0" Grid.Column="8" Margin="10"/>
-
-        <!-- Элемент GLControl заполняет центральную часть   -->
-        <controls:GLControl x:Name="glControl" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"/>
-        <controls:GLControl x:Name="glControl2" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3"/>
+        <!-- Кнопки для левого изображения -->
+        <Button Content="Normalize Image" HorizontalAlignment="Left" VerticalAlignment="Top" Click="NormalizeImage_Click" Grid.Row="1" Grid.Column="0" Margin="10"/>
+        <Button Content="Invert Image" HorizontalAlignment="Left" VerticalAlignment="Top" Click="InvertImage_Click" Grid.Row="2" Grid.Column="0" Margin="10"/>
+        <Button Content="Histogram Equalization" HorizontalAlignment="Left" VerticalAlignment="Top" Click="HistogramEqualization_Click" Grid.Row="3" Grid.Column="0" Margin="10"/>
+        <Button Content="Median Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="MedianFilter_Click" Grid.Row="4" Grid.Column="0" Margin="10"/>
+        <Button Content="Box Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BoxFilter_Click" Grid.Row="5" Grid.Column="0" Margin="10"/>
+        <Button Content="Bilateral Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BilateralFilter_Click" Grid.Row="6" Grid.Column="0" Margin="10"/>
+        <Button Content="Gaussian Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GaussianFilter_Click" Grid.Row="7" Grid.Column="0" Margin="10"/>
+        <Button Content="Sharpen Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SharpenFilter_Click" Grid.Row="8" Grid.Column="0" Margin="10"/>
+        <!-- Кнопки для правого изображения -->
+        <Button Content="Normalize Image" HorizontalAlignment="Left" VerticalAlignment="Top" Click="NormalizeImage_Click2" Grid.Row="1" Grid.Column="2" Margin="10"/>
+        <Button Content="Invert Image" HorizontalAlignment="Left" VerticalAlignment="Top" Click="InvertImage_Click2" Grid.Row="2" Grid.Column="2" Margin="10"/>
+        <Button Content="Histogram Equalization" HorizontalAlignment="Left" VerticalAlignment="Top" Click="HistogramEqualization_Click2" Grid.Row="3" Grid.Column="2" Margin="10"/>
+        <Button Content="Median Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="MedianFilter_Click2" Grid.Row="4" Grid.Column="2" Margin="10"/>
+        <Button Content="Box Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BoxFilter_Click2" Grid.Row="5" Grid.Column="2" Margin="10"/>
+        <Button Content="Bilateral Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BilateralFilter_Click2" Grid.Row="6" Grid.Column="2" Margin="10"/>
+        <Button Content="Gaussian Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GaussianFilter_Click2" Grid.Row="7" Grid.Column="2" Margin="10"/>
+        <Button Content="Sharpen Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SharpenFilter_Click2" Grid.Row="8" Grid.Column="2" Margin="10"/>
+        <!-- Элемент GLControl и GLControl2 заполняют центральную часть   -->
+        <controls:GLControl x:Name="glControl" Grid.Row="1" Grid.Column="1" Grid.RowSpan="9"/>
+        <controls:GLControl x:Name="glControl2" Grid.Row="1" Grid.Column="3" Grid.RowSpan="9"/>
         <!-- Текстовое поле для отладки в нижней части -->
-        <TextBox x:Name="debugTextBlock" Grid.Row="2" Grid.Column="0"  Margin="10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Height="100" Grid.ColumnSpan="9"/>
+        <TextBox x:Name="debugTextBlock" Grid.Row="11" Grid.Column="0"  Margin="10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Height="100" Grid.ColumnSpan="5"/>
  
     </Grid>
 </Window>
