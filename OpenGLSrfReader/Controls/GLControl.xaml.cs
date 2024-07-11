@@ -64,15 +64,8 @@ namespace OpenGLSrfReader.Controls
         
         public void RenderImage(SrfFileData data, TextBox debugTextBlock)
         {
-           // Assembly.LoadFrom(@"D:\data\downloads\interface.dll");
             string debugInfo = $"Pixel Data: {string.Join(", ", data.PixelData.Take(10))}";
             debugTextBlock.Text = debugInfo;
-            
-           /* _Data = Tools.ArrayToTensor(data.PixelData, data.FrameHeight, data.FrameWidth);
-            ushort[,,]_NormalizeData = Tools.Normalize(_Data);
-            ushort[,,]_HistEqualization = Tools.HistEqualization(_NormalizeData);
-            ushort[,,]_Inverted = Tools.Inverted(_HistEqualization);
-            _data = Tools.Flatten(_Inverted);*/
            
            // Гармонизируем изображение
            // ushort[] harmonizedData = ImageProcessing.HarmonizeImage(data.PixelData);
@@ -81,23 +74,10 @@ namespace OpenGLSrfReader.Controls
             _textureWidth = data.FrameWidth;
             _textureHeight = data.FrameHeight;
 
+           // ushort[] dataToRender = (ushort[])data.PixelData.Clone();
+
             GL.BindTexture(TextureTarget.Texture2D, _textureId);GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.R16, _textureWidth, _textureHeight, 0,
                PixelFormat.Red, PixelType.UnsignedShort, data.PixelData);
-           
-           /* GL.RasterPos2(0, 0);
-            GL.DrawPixels(_textureWidth, _textureHeight, PixelFormat.Red, PixelType.UnsignedShort, _data);
-            
-            GL.BindTexture(TextureTarget.Texture2D, _textureId);
-            GL.Begin(PrimitiveType.Quads);
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex2(-1.0f, -1.0f);
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex2(1.0f, -1.0f);
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex2(1.0f, 1.0f);
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex2(-1.0f, 1.0f);
-            GL.End();
-            
-            GL.RasterPos2(_textureWidth, 0);
-            GL.DrawPixels(_textureWidth, _textureHeight, PixelFormat.Red, PixelType.UnsignedShort, _data);
-            */
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);

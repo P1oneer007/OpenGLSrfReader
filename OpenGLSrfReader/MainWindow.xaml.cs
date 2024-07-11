@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using OpenGLSrfReader.Controls;
+using OpenGLSrfReader.Services;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Wpf;
@@ -43,12 +44,16 @@ namespace OpenGLSrfReader
                 string filePath = openFileDialog.FileName;
                 SrfFileReader reader = new SrfFileReader(filePath);
                 imageData1 = reader.ReadSrfFile();
-                imageData2 = new SrfFileData();
-                imageData2 = imageData1 as SrfFileData;
-
-                NormalizeImage(imageData1);
+                imageData2 = new SrfFileData
+                {
+                    PixelData = (ushort[])imageData1.PixelData.Clone(),
+                    FrameHeight = imageData1.FrameHeight,
+                    FrameWidth = imageData1.FrameWidth,
+                };
+               
+                //NormalizeImage(imageData1);
                 DisplayImage(imageData1, glControl);
-                NormalizeImage(imageData2);
+               //NormalizeImage(imageData2);
                 DisplayImage(imageData2, glControl2);
             }
 
@@ -82,7 +87,6 @@ namespace OpenGLSrfReader
             InvertImage(imageData2);
             DisplayImage(imageData2, glControl2);
         }
-
         private void InvertImage(SrfFileData data)
         {
             if (data == null) return;
@@ -90,6 +94,7 @@ namespace OpenGLSrfReader
             ushort[,,] _InvertImage = Tools.Inverted(_currentImage);
             data.PixelData = Tools.Flatten(_InvertImage);
         }
+
         private void HistogramEqualization_Click(object sender, RoutedEventArgs e)
         {
             HistogramEqualization(imageData1);
@@ -161,6 +166,7 @@ namespace OpenGLSrfReader
             ushort[,,] _BilateralFilter = Tools.BilateralFilter(_currentImage, 3, 10);
             data.PixelData = Tools.Flatten(_BilateralFilter);
         }
+
         private void GaussianFilter_Click(object sender, RoutedEventArgs e)
         {
             GaussianFilter(imageData1);
@@ -178,6 +184,7 @@ namespace OpenGLSrfReader
             ushort[,,] _GaussianFilter = Tools.Gaussian(_currentImage, 5, 0.8);
             data.PixelData = Tools.Flatten(_GaussianFilter);
         }
+
         private void SharpenFilter_Click(object sender, RoutedEventArgs e)
         {
             SharpenFilter(imageData1);
@@ -195,6 +202,25 @@ namespace OpenGLSrfReader
             ushort[,,] _SharpenFilter = Tools.Sharpen(_currentImage, 1.0, false);
             data.PixelData = Tools.Flatten(_SharpenFilter);
         }
+
+        private void CvieFilter_Click(object sender, RoutedEventArgs e)
+        {
+            CvieFilter(imageData1);
+            DisplayImage(imageData1, glControl);
+        }
+        private void CvieFilter(SrfFileData data)
+        {
+            if (data == null) return;
+            int width = data.FrameWidth;
+            int height = data.FrameHeight;
+            int length = width * height;
+            IntPtr _datain = Tools1.UshortToIntPtr(data.PixelData);
+            IntPtr _dataout = _datain;
+            Tools1.ProcessImage(_datain, _dataout, data.FrameHeight, data.FrameWidth);
+            ushort[] cviedata = Tools1.IntPtrToUshort(_dataout, length);
+            data.PixelData = cviedata;
+        }
+
         private void DisplayImage(SrfFileData data, GLControl controlToDisplay)
         {
             controlToDisplay.RenderImage(data, debugTextBlock);
@@ -204,6 +230,5 @@ namespace OpenGLSrfReader
         {
 
         }
-
     }
 }

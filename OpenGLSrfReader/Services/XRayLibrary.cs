@@ -101,7 +101,7 @@ class Tools()
     }
 
     public static int WriteImageByOpenCV(string directory, string fileName, ushort[,,] tensor) 
-    {   
+    {
         string path = directory + fileName + ".png";
         int height = tensor.GetLength(0);
         int width = tensor.GetLength(1);
@@ -209,7 +209,7 @@ class Tools()
 
     public static ushort[,,] BilateralFilter(ushort[,,] tensor, int d=3, double sigma=10)
     {
-        // kernel size must be equal 1, 3 or 5
+            // kernel size must be equal 1, 3 or 5
         int height = tensor.GetLength(0);
         int width = tensor.GetLength(1);
         int channels = tensor.GetLength(2);
@@ -295,22 +295,22 @@ class Tools()
     // для преобразования из одномерного массива в тензор
     public static ushort[,,] ArrayToTensor(ushort[] array, int height = 3008, int width = 3072)
     {
-        ushort[,,] tensor = new ushort[height, width, 1];
-        int length = array.Length * sizeof(ushort);
-        System.Buffer.BlockCopy(array, 0, tensor, 0, length);
-        return tensor;
-    }
+             ushort[,,] tensor = new ushort[height, width, 1];
+             int length = array.Length * sizeof(ushort);
+             System.Buffer.BlockCopy(array, 0, tensor, 0, length);
+             return tensor;
+        }
     // для преобразования из тензора в одномерный массив
     public static ushort[] Flatten(ushort[,,] tensor)
     {
-        int height = tensor.GetLength(0);
-        int width = tensor.GetLength(1);
-        int channels = tensor.GetLength(2);
-        int length = height * width * channels;
-        ushort[] array = new ushort[length];
-        Buffer.BlockCopy(tensor, 0, array, 0, length * sizeof(ushort));
-        return array;
-    }
+             int height = tensor.GetLength(0);
+             int width = tensor.GetLength(1);
+             int channels = tensor.GetLength(2);
+             int length = height * width * channels;
+             ushort[] array = new ushort[length];
+             Buffer.BlockCopy(tensor, 0, array, 0, length * sizeof(ushort));
+             return array;
+        }
 
     }
 } 

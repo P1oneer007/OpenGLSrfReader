@@ -18,6 +18,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -40,6 +41,7 @@
         <Button Content="Bilateral Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="BilateralFilter_Click" Grid.Row="6" Grid.Column="0" Margin="10"/>
         <Button Content="Gaussian Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GaussianFilter_Click" Grid.Row="7" Grid.Column="0" Margin="10"/>
         <Button Content="Sharpen Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SharpenFilter_Click" Grid.Row="8" Grid.Column="0" Margin="10"/>
+        <Button Content="Сvie Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="CvieFilter_Click" Grid.Row="9" Grid.Column="0" Margin="10"/>
         <!-- Кнопки для правого изображения -->
         <Button Content="Normalize Image" HorizontalAlignment="Left" VerticalAlignment="Top" Click="NormalizeImage_Click2" Grid.Row="1" Grid.Column="2" Margin="10"/>
         <Button Content="Invert Image" HorizontalAlignment="Left" VerticalAlignment="Top" Click="InvertImage_Click2" Grid.Row="2" Grid.Column="2" Margin="10"/>
@@ -50,8 +52,8 @@
         <Button Content="Gaussian Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="GaussianFilter_Click2" Grid.Row="7" Grid.Column="2" Margin="10"/>
         <Button Content="Sharpen Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SharpenFilter_Click2" Grid.Row="8" Grid.Column="2" Margin="10"/>
         <!-- Элемент GLControl и GLControl2 заполняют центральную часть   -->
-        <controls:GLControl x:Name="glControl" Grid.Row="1" Grid.Column="1" Grid.RowSpan="9"/>
-        <controls:GLControl x:Name="glControl2" Grid.Row="1" Grid.Column="3" Grid.RowSpan="9"/>
+        <controls:GLControl x:Name="glControl" Grid.Row="1" Grid.Column="1" Grid.RowSpan="10"/>
+        <controls:GLControl x:Name="glControl2" Grid.Row="1" Grid.Column="3" Grid.RowSpan="10"/>
         <!-- Текстовое поле для отладки в нижней части -->
         <TextBox x:Name="debugTextBlock" Grid.Row="11" Grid.Column="0"  Margin="10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Height="100" Grid.ColumnSpan="5"/>
  
